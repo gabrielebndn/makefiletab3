@@ -1,0 +1,11 @@
+language: python
+python:
+  - "2.6"
+  - "2.7"
+  - "pypy"
+script:
+# there's shouldn't be any command invoked other than the ones recommended in README or INSTALL
+ - python setup.py build
+ - python setup.py install
+# python3 setup.py build fails due to syntax error `except DistutilsPlatformError, x:` in ` File "/tmp/easy_install-d3byhsum/Cheetah-2.4.4/SetupTools.py", line 50`
+# pip3 isn't available -> skip python 3.x in travis
