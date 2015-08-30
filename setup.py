@@ -27,6 +27,10 @@ ch = logging.StreamHandler()
 ch.setLevel(logging.INFO)
 logger.addHandler(ch)
 
+plugin_file_dir_path = os.path.join(os.path.expanduser("~"), ".local", "share", "gedit", "plugins", makefiletab3_globals.app_name)
+plugin_file_name = "makefiletab3.plugin"
+plugin_file_path = os.path.join(plugin_file_dir_path, plugin_file_name)
+
 EXIT_IMPORT_FAILURE = 1
 
 from setuptools.command.install import install as _install
@@ -42,7 +46,9 @@ class PluginFileCreateInstall(_install):
         t.module_name = makefiletab3_globals.app_name
         t.description = makefiletab3_globals.description
         t.loader = "python3"
-        t_file = open(os.path.join(os.path.expanduser("~"), ".local", "share", "gedit", "plugins", makefiletab3_globals.app_name, "makefiletab3.plugin"), "w")
+        if not os.path.exists(plugin_file_dir_path):
+            os.makedirs(plugin_file_dir_path)
+        t_file = open(plugin_file_path, "w")
         t_file.write(str(t))
         t_file.flush()
         t_file.close()
