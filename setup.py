@@ -21,6 +21,9 @@ import makefiletab3_globals
 import sys
 import logging
 
+if sys.version_info >= (3,):
+    raise Exception("python >= 3.x isn't supported (because of syntax error in the cheetah templating engine)")
+
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 ch = logging.StreamHandler()
