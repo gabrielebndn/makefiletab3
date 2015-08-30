@@ -19,6 +19,15 @@ import os
 import subprocess as sp
 import makefiletab3_globals
 import sys
+import logging
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+ch = logging.StreamHandler()
+ch.setLevel(logging.INFO)
+logger.addHandler(ch)
+
+EXIT_IMPORT_FAILURE = 1
 
 from setuptools.command.install import install as _install
 class PluginFileCreateInstall(_install):
@@ -28,7 +37,7 @@ class PluginFileCreateInstall(_install):
             from Cheetah.Template import Template
         except ImportError as ex:
             logger.error("Import of Cheetah module failed. Make sure the cheetah templating engine is installed. Reason: %s" % (ex,))
-            sys.exit(0)
+            sys.exit(EXIT_IMPORT_FAILURE)
         t = Template(file="makefiletab3.plugin.tmpl")
         t.module_name = makefiletab3_globals.app_name
         t.description = makefiletab3_globals.description
@@ -41,7 +50,7 @@ class PluginFileCreateInstall(_install):
 setup(
     name = makefiletab3_globals.app_name,
     version = makefiletab3_globals.app_version_string,
-    install_requires = ["cheetah"],
+    setup_requires = ["cheetah"],
     cmdclass={'install': PluginFileCreateInstall},
     
     # metadata for upload to PyPI
