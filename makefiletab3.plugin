@@ -1,9 +1,0 @@
-[Plugin]
-Loader=python
-Module=makefiletab3
-IAge=3
-Name=MakefileTab
-Description=When editing a Makefile, insert a real TAB character with the TAB key
-Authors=Jesse van den Kieboom <jesse@icecrew.nl>, Lars Wirzenius <liw@liw.fi>
-Copyright=Copyright 2013 Lars Wirzenius <liw@liw.fi>
-Website=http://liw.fi/makefiletab3/
