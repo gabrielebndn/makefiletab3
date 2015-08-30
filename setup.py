@@ -18,12 +18,17 @@ from pkg_resources import parse_version
 import os
 import subprocess as sp
 import makefiletab3_globals
+import sys
 
 from setuptools.command.install import install as _install
 class PluginFileCreateInstall(_install):
     def  run(self):
         # skip call to super.run because there's no use and produces error message due to missing permission
-        from Cheetah.Template import Template
+        try:
+            from Cheetah.Template import Template
+        except ImportError as ex:
+            logger.error("Import of Cheetah module failed. Make sure the cheetah templating engine is installed. Reason: %s" % (ex,))
+            sys.exit(0)
         t = Template(file="makefiletab3.plugin.tmpl")
         t.module_name = makefiletab3_globals.app_name
         t.description = makefiletab3_globals.description
